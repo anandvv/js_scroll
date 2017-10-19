@@ -32,9 +32,16 @@
 
 		function updateText()
 		{
-			el.innerHTML = el.innerHTML+words[word_counter][character_counter++];
+			//added the condition to check for a space and add replace with &nbsp;
+			if(words[word_counter][character_counter] == " "){
+				el.innerHTML = el.innerHTML + "&nbsp";	
+			}
+			else{
+				el.innerHTML = el.innerHTML + words[word_counter][character_counter];
+			}
+			character_counter++;
 
-			if(character_counter == words[word_counter].length)
+			if(character_counter == words[word_counter].length + 1) //fixed the bug that was causing the last character of each word to not appear
 			{
 				word_counter++; 	//choose a different word
 				character_counter = 0;	//start over with the first character of the word
@@ -44,6 +51,10 @@
 				if(word_counter == words.length)
 					word_counter = 0;
 			}
+		}
+
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
 		}
 
 		setInterval(updateText,300);
